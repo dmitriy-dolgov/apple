@@ -6,7 +6,10 @@ class OnGround implements common\models\items\IState
 {
     protected $size = 100;
 
+    /** @var integer время созревания (появления) */
     protected $ripen;
+
+    const ROT_TIMEOUT = 60 * 60 * 5;
 
 
     public function getFunctions()
@@ -23,9 +26,17 @@ class OnGround implements common\models\items\IState
                     }
                 },
             ],
-            'time-passed' => function () {
-
-            }
+            'time-passed' => [
+                'name' => 'Увеличить время',
+                'params' => 'time',
+                'func' => function ($time) {
+                    $this->ripen += $time;
+                    $this->size = ($newSize < 0) ? 0 : $newSize;
+                    if ($this->size == 0) {
+                        throw new SignalRemove();
+                    }
+                },
+            ],
         ];
     }
 }
