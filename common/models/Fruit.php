@@ -26,6 +26,22 @@ class Fruit
         $this->currentState = new OnTree($this);
     }
 
+    public function getCurrentFunctions()
+    {
+        $this->currentState->getFunctions();
+    }
+
+    public function runFunction($functionName, $params = false)
+    {
+        $function = $this->currentState->getFunctions()[$functionName];
+
+        assert(is_array($function));
+
+        if ($fResult = $function['func']($params)) {
+
+        }
+    }
+
     public function randomInit()
     {
         $colors = [
