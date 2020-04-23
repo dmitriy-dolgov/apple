@@ -8,11 +8,16 @@ interface IAttribute
 
     public function getValue();
 
+    public function getSupportedOperations();
+
 
     public function initValue();
 
 
-    public function canDo(&$attributes, $operation);
+    public function needsDataToUpdateState();
 
-    public function do();
+
+    public function allowUpdataState(string $operation);
+
+    public function updataState(string $operation, $data = []);
 }

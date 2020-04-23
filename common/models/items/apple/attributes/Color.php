@@ -19,6 +19,11 @@ class Color implements IAttribute
         return $this->value;
     }
 
+    public function getSupportedOperations()
+    {
+        return [];
+    }
+
     public function initValue()
     {
         $colors = [
@@ -53,16 +58,19 @@ class Color implements IAttribute
         ];
 
         $this->value = $colors[rand(0, count($colors) - 1)];
-
-        return $this->value;
     }
 
-    public function canDo(&$attributes, $operation)
+    public function needsDataToUpdateState()
+    {
+        return false;
+    }
+
+    public function allowUpdataState($operation)
     {
         return true;
     }
 
-    public function do()
+    public function updataState($operation, $data = [])
     {
     }
 }
