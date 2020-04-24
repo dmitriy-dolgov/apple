@@ -16,10 +16,10 @@ class Fruit
     protected $currentState;
 
     /** @var string */
-    protected $color;
+    public $color;
 
     /** @var integer когда созрел (появился) */
-    protected $ripen;
+    public $ripen;
 
 
     public function __construct()
