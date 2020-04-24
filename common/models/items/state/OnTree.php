@@ -12,8 +12,8 @@ class OnTree extends \common\models\items\State
             'fall' => [
                 'name' => 'Упасть на землю',
                 'params' => [
-                    'type' => 'datetime',
-                    'description' => 'Время падения',
+                    'type' => 'time',
+                    'description' => 'Время падения с момента создания, мин.',
                 ],
                 'func' => function ($datetime) {
                     return new OnGround($this->fruit, $datetime);
