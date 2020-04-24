@@ -18,7 +18,7 @@ class OnGround extends \common\models\items\State
     const ROT_TIMEOUT = 60 * 60 * 5;
 
 
-    public function __construct(common\models\Fruit $fruit, $fellTime)
+    public function __construct(\common\models\Fruit $fruit, $fellTime)
     {
         parent::__construct($fruit, $fellTime);
 

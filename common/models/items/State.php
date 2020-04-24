@@ -8,7 +8,7 @@ abstract class State
     protected $fruit;
 
 
-    public function __construct(common\models\Fruit $fruit, $data = false)
+    public function __construct(\common\models\Fruit $fruit, $data = false)
     {
         $this->fruit = $fruit;
     }

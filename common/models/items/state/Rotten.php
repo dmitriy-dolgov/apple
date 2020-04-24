@@ -10,7 +10,7 @@ class Rotten extends \common\models\items\State
     protected $rotTime;
 
 
-    public function __construct(common\models\Fruit $fruit, $rotTime)
+    public function __construct(\common\models\Fruit $fruit, $rotTime)
     {
         parent::__construct($fruit, $rotTime);
 

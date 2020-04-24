@@ -38,7 +38,10 @@ class Fruit
         assert(is_array($function));
 
         if ($fResult = $function['func']($params)) {
-
+            if (is_a($fResult, 'State')) {
+                $this->stateList[] = $fResult;
+                $this->currentState = $fResult;
+            }
         }
     }
 

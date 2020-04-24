@@ -43,7 +43,7 @@ class Apple extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'user_id' => 'User ID',
-            'apple_data' => 'Apple Data',
+            'apple_data' => 'AppleFruit Data',
         ];
     }
 

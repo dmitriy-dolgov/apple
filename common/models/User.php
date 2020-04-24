@@ -1,6 +1,7 @@
 <?php
 namespace common\models;
 
+use common\models\db\Apple;
 use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;

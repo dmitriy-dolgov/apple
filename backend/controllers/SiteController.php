@@ -1,6 +1,7 @@
 <?php
 namespace backend\controllers;
 
+use common\models\AppleList;
 use Yii;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -60,6 +61,8 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+        $appleList = new AppleList(Yii::$app->user->identity);
+
         return $this->render('index');
     }
 

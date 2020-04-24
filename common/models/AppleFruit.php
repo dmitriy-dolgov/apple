@@ -2,7 +2,7 @@
 
 namespace common\models;
 
-class Apple extends Fruit
+class AppleFruit extends Fruit
 {
     public $name = 'Яблоко';
 }
