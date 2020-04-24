@@ -1,6 +1,7 @@
 <?php
 
 /* @var $this yii\web\View */
+/* @var $appleList \common\models\AppleFruit[] */
 
 $this->title = 'Манипуляции с яблоками';
 
@@ -31,6 +32,12 @@ JS
     </div>
 
     <div class="panel panel-default">
+        <?php foreach ($appleList as $apple): ?>
+            <div class="apple-panel">
+                <img src="/img/apple-on-tree.jpg" alt="">
+            </div>
+            <hr>
+        <?php endforeach; ?>
     </div>
 
 </div>

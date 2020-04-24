@@ -1,4 +1,5 @@
 <?php
+
 namespace backend\controllers;
 
 use common\models\AppleList;
@@ -63,7 +64,9 @@ class SiteController extends Controller
     {
         $appleList = new AppleList(Yii::$app->user->identity);
 
-        return $this->render('index');
+        return $this->render('index', [
+            'appleList' => $appleList->getList(),
+        ]);
     }
 
     /**

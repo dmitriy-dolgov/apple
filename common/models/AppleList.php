@@ -7,7 +7,9 @@ use common\models\db\Apple;
 
 class AppleList
 {
+    /** @var AppleFruit[] */
     protected $list = [];
+
     /** @var User */
     protected $listUser;
 
@@ -24,7 +26,7 @@ class AppleList
         }
     }
 
-    public function randomInit()
+    protected function randomInit()
     {
         $this->list = [];
 
@@ -37,7 +39,7 @@ class AppleList
         }
     }
 
-    public function saveToDb()
+    protected function saveToDb()
     {
         $listSerialized = serialize($this->list);
         $newRecord = new Apple();
@@ -45,7 +47,7 @@ class AppleList
         $this->listUser->link('apples', $newRecord);
     }
 
-    public function loadFromDb()
+    protected function loadFromDb()
     {
         $this->list = [];
 
@@ -59,5 +61,10 @@ class AppleList
                 $this->listUser->apples[0]->delete();
             }
         }
+    }
+
+    public function getList()
+    {
+        return $this->list;
     }
 }
