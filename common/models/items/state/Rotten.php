@@ -17,6 +17,11 @@ class Rotten extends \common\models\items\State
         $this->rotTime = $rotTime;
     }
 
+    public function getName()
+    {
+        return 'Гнилое';
+    }
+
     public function getFunctions()
     {
         return [];

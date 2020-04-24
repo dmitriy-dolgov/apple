@@ -26,12 +26,20 @@ class OnGround extends \common\models\items\State
         $this->currentTime = $this->fellTime;
     }
 
+    public function getName()
+    {
+        return 'На земле';
+    }
+
     public function getFunctions()
     {
         return [
             'eat' => [
                 'name' => 'Откусить',
-                'params' => 'percent',
+                'params' => [
+                    'type' => 'percent',
+                    'description' => 'Сколько откусить в %',
+                ],
                 'func' => function ($eaten) {
                     $newSize = $this->size - $eaten;
                     $this->size = ($newSize < 0) ? 0 : $newSize;
@@ -42,7 +50,10 @@ class OnGround extends \common\models\items\State
             ],
             'time-passed' => [
                 'name' => 'Увеличить время',
-                'params' => 'time',
+                'params' => [
+                    'type' => 'time',
+                    'description' => 'Сколько времени прошло в минутах',
+                ],
                 'func' => function ($time) {
                     $this->currentTime += $time;
                     $rotAfter = $this->fellTime + self::ROT_TIMEOUT;
