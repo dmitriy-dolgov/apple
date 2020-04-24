@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\models\items\State;
 use common\models\items\state\OnTree;
 
 class Fruit
@@ -26,9 +27,14 @@ class Fruit
         $this->currentState = new OnTree($this);
     }
 
-    public function getCurrentFunctions()
+    /*public function getCurrentFunctions()
     {
-        $this->currentState->getFunctions();
+        return $this->currentState->getFunctions();
+    }*/
+
+    public function getCurrentState(): State
+    {
+        return $this->currentState;
     }
 
     public function runFunction($functionName, $params = false)

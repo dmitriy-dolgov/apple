@@ -34,7 +34,24 @@ JS
     <div class="panel panel-default">
         <?php foreach ($appleList as $apple): ?>
             <div class="apple-panel">
-                <img src="/img/apple-on-tree.jpg" alt="">
+                <?php
+                switch ($apple->getCurrentState()->getId()) {
+                    case 'OnTree':
+                        echo '<img src="/img/apple-on-tree.jpg" alt="">';
+                        break;
+                    case 'OnGround':
+                        echo '<img src="/img/apple-on-ground.jpg" alt="">';
+                        break;
+                    case 'Rotten':
+                        echo '<img src="/img/apple-rotten.jpg" alt="">';
+                        break;
+                    default:
+                        break;
+                }
+                ?>
+                <?= $apple->getCurrentState()->getName() ?>
+                <?php foreach ($apple->getCurrentState()->getFunctions() as $func): ?>
+                <?php endforeach; ?>
             </div>
             <hr>
         <?php endforeach; ?>

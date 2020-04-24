@@ -13,10 +13,18 @@ abstract class State
         $this->fruit = $fruit;
     }
 
+    abstract public function getName();
+
     abstract public function getFunctions();
 
     public function getData()
     {
         return false;
+    }
+
+    public function getId()
+    {
+        $parts = explode('\\', get_called_class());
+        return end($parts);
     }
 }
