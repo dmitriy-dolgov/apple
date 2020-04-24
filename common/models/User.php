@@ -21,6 +21,8 @@ use yii\web\IdentityInterface;
  * @property integer $created_at
  * @property integer $updated_at
  * @property string $password write-only password
+ *
+ * @property Apple[] $apples
  */
 class User extends ActiveRecord implements IdentityInterface
 {
@@ -64,6 +66,16 @@ class User extends ActiveRecord implements IdentityInterface
     public static function findIdentity($id)
     {
         return static::findOne(['id' => $id, 'status' => self::STATUS_ACTIVE]);
+    }
+
+    /**
+     * Gets query for [[Apples]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getApples()
+    {
+        return $this->hasMany(Apple::className(), ['user_id' => 'id']);
     }
 
     /**
