@@ -86,6 +86,17 @@ CSS
                         <?= date('Y-m-d H:i:s', $apple->ripen) ?>
                     </td>
 
+                    <td>
+                        <?php
+                        $additionalData = $apple->getCurrentState()->getData();
+                        foreach ($additionalData as $dataElement) {
+                            $dataElementValue = ($dataElement['type'] == 'timestamp') ? date('Y-m-d H:i:s',
+                                $dataElement['value']) : $dataElement['value'];
+                            echo $dataElement['description'] . ' : ' . $dataElementValue . '<br>';
+                        }
+                        ?>
+                    </td>
+
                     <td style="vertical-align: middle">
                         <?php foreach ($apple->getCurrentState()->getFunctions() as $funcName => $func): ?>
                             <?php ActiveForm::begin(

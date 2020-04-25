@@ -33,6 +33,7 @@ class Rotten extends \common\models\items\State
             [
                 'description' => 'Когда сгнило',
                 'value' => $this->rotTime,
+                'type' => 'timestamp',
             ],
         ];
     }

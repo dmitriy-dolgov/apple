@@ -71,10 +71,12 @@ class OnGround extends \common\models\items\State
             [
                 'description' => 'Сколько процентов осталось',
                 'value' => $this->size,
+                'type' => 'percent',
             ],
             [
-                'description' => 'Когда упал',
+                'description' => 'Когда упало',
                 'value' => $this->fellTime,
+                'type' => 'timestamp',
             ]
         ];
     }
