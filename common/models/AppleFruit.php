@@ -2,7 +2,6 @@
 
 namespace common\models;
 
-use Yii;
 use common\models\db\Apple;
 
 class AppleFruit extends Fruit
@@ -15,13 +14,13 @@ class AppleFruit extends Fruit
         $this->currentState = new OnTree($this);
     }
 
-    public static function instanceById($fruitId, $userId = false): ?AppleFruit
+    public static function getInstanceById($fruitId, $userId = false): ?AppleFruit
     {
         $appleObj = null;
 
         if ($appleElement = Apple::findOne($fruitId)) {
 
-            if ($appleElement->user_id != Yii::$app->user->identity->getId()) {
+            if ($userId && ($appleElement->user_id != $userId)) {
                 throw new ForbiddenHttpException();
             }
 
@@ -34,5 +33,17 @@ class AppleFruit extends Fruit
         }
 
         return $appleObj;
+    }
+
+    public function saveById($fruitId, User $user)
+    {
+        $appleDb = Apple::findOne($fruitId);
+
+        if (!$appleDb) {
+            throw new \Exception('Не найдено яблоко с ID ' . $fruitId);
+        }
+
+        $appleDb->apple_data = serialize($this);
+        $user->link('apples', $appleDb);
     }
 }

@@ -21,7 +21,9 @@ abstract class Fruit
     public $ripen;
 
 
-    abstract public static function instanceById($fruitId, $userId = false);
+    abstract public static function getInstanceById($fruitId, $userId = false);
+
+    abstract public function saveById($fruitId, User $user);
 
     public function getCurrentState(): State
     {
@@ -35,7 +37,7 @@ abstract class Fruit
         assert(is_array($function));
 
         if ($fResult = $function['func']($params)) {
-            if (is_a($fResult, 'State')) {
+            if (is_a($fResult, '\common\models\items\State')) {
                 $this->stateList[] = $fResult;
                 $this->currentState = $fResult;
             }
