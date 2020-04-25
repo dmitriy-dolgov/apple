@@ -2,8 +2,9 @@
 
 namespace common\models;
 
-
+use Yii;
 use common\models\db\Apple;
+use common\models\items\SignalRemove;
 
 class AppleList
 {
@@ -78,5 +79,19 @@ class AppleList
     public function getList()
     {
         return $this->list;
+    }
+
+    public static function handleAppleFunction($appleId, $functionName, $functionParam)
+    {
+        $userId = Yii::$app->user->identity->getId();
+
+        if ($appleObj = AppleFruit::getInstanceById($appleId, $userId)) {
+            try {
+                $appleObj->runFunction($functionName, $functionParam);
+                $appleObj->saveById($appleId, Yii::$app->user->identity);
+            } catch (SignalRemove $sr) {
+                $appleObj::deleteById($appleId, $userId);
+            }
+        }
     }
 }

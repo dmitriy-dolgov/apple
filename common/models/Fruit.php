@@ -25,6 +25,8 @@ abstract class Fruit
 
     abstract public function saveById($fruitId, User $user);
 
+    abstract public static function deleteById($fruitId, $userId = false);
+
     public function getCurrentState(): State
     {
         return $this->currentState;

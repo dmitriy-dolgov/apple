@@ -2,7 +2,6 @@
 
 namespace backend\controllers;
 
-use common\models\AppleFruit;
 use common\models\AppleList;
 use Yii;
 use yii\web\Controller;
@@ -32,10 +31,7 @@ class ItemController extends Controller
             $functionParam = Yii::$app->request->post('sfn-' . $functionName);
         }
 
-        if ($appleObj = AppleFruit::getInstanceById($appleId, Yii::$app->user->identity->getId())) {
-            $appleObj->runFunction($functionName, $functionParam);
-            $appleObj->saveById($appleId, Yii::$app->user->identity);
-        }
+        AppleList::handleAppleFunction($appleId, $functionName, $functionParam);
 
         $this->goHome();
     }
