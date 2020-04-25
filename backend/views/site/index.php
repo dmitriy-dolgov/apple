@@ -5,6 +5,7 @@
 /* @var $appleList \common\models\AppleFruit[] */
 
 use yii\helpers\Html;
+use yii\widgets\ActiveForm;
 
 $this->title = 'Манипуляции с яблоками';
 
@@ -81,21 +82,25 @@ CSS
 
                     <td style="vertical-align: middle">
                         <?php foreach ($apple->getCurrentState()->getFunctions() as $funcName => $func): ?>
-                            <form method="post" action="/apple/handle-state-function">
-                                <input type="hidden" name="state-id" value="<?= $apple->getCurrentState()->getId() ?>">
-                                <input type="hidden" name="state-function" value="<?= $funcName ?>">
+                            <?php ActiveForm::begin(
+                                [
+                                    'action' => '/apple/handle-state-function',
+                                ]
+                            ) ?>
+                            <input type="hidden" name="state-id" value="<?= $apple->getCurrentState()->getId() ?>">
+                            <input type="hidden" name="state-function" value="<?= $funcName ?>">
 
-                                <div>
-                                    <?php if (!empty($func['params'])): ?>
-                                        <?= Html::encode($func['params']['description']) ?><br>
-                                        <input type="text" name="<?= Html::encode('sfn-' . $funcName) ?>">
-                                    <?php endif; ?>
-                                </div>
-                                <br>
-                                <div>
-                                    <input type="submit" value="<?= Html::encode($func['name']) ?>">
-                                </div>
-                            </form>
+                            <div>
+                                <?php if (!empty($func['params'])): ?>
+                                    <?= Html::encode($func['params']['description']) ?><br>
+                                    <input type="text" name="<?= Html::encode('sfn-' . $funcName) ?>">
+                                <?php endif; ?>
+                            </div>
+                            <br>
+                            <div>
+                                <input type="submit" value="<?= Html::encode($func['name']) ?>">
+                            </div>
+                            <?php ActiveForm::end() ?>
                         <?php endforeach; ?>
                     </td>
                 </tr>
