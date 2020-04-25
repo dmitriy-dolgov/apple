@@ -3,9 +3,8 @@
 namespace common\models;
 
 use common\models\items\State;
-use common\models\items\state\OnTree;
 
-class Fruit
+abstract class Fruit
 {
     public $name = 'Неизвестный фрукт';
 
@@ -22,15 +21,7 @@ class Fruit
     public $ripen;
 
 
-    public function __construct()
-    {
-        $this->currentState = new OnTree($this);
-    }
-
-    /*public function getCurrentFunctions()
-    {
-        return $this->currentState->getFunctions();
-    }*/
+    abstract public static function instanceById($fruitId, $userId = false);
 
     public function getCurrentState(): State
     {

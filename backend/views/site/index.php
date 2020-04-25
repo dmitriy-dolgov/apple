@@ -31,6 +31,11 @@ CSS
 ?>
 <div class="site-index">
 
+    <?php ActiveForm::begin(
+        [
+            'action' => '/apple/generate-items',
+        ]
+    ) ?>
     <div class="panel panel-default">
         <div class="panel-heading">
             <h3 class="panel-title">Сгенерировать новые яблоки:</h3>
@@ -38,17 +43,18 @@ CSS
         <div class="panel-body">
             <div style="float: left">
                 Количество:
-                <label>От <input type="text" id="amount[from]" value="1"></label>
-                <label>До <input type="text" id="amount[to]" value="50"></label>
+                <label>От <input type="text" name="amount[from]" value="1"></label>
+                <label>До <input type="text" name="amount[to]" value="10"></label>
             </div>
             <div style="float: right">
                 <button class="btn-generate-apples">Сгенерировать</button>
             </div>
         </div>
     </div>
+    <?php ActiveForm::end() ?>
 
     <div class="panel panel-default">
-        <?php foreach ($appleList as $apple): ?>
+        <?php foreach ($appleList as $appleId => $apple): ?>
             <table class="apple-panel">
                 <tr>
                     <td>
@@ -87,6 +93,8 @@ CSS
                                     'action' => '/apple/handle-state-function',
                                 ]
                             ) ?>
+
+                            <input type="hidden" name="apple-id" value="<?= $appleId ?>">
                             <input type="hidden" name="state-id" value="<?= $apple->getCurrentState()->getId() ?>">
                             <input type="hidden" name="state-function" value="<?= $funcName ?>">
 

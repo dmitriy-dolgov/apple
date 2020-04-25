@@ -1,14 +1,20 @@
 <?php
+
 namespace backend\controllers;
 
+use common\models\AppleFruit;
 use common\models\AppleList;
+use Yii;
 use yii\web\Controller;
 
 class ItemController extends Controller
 {
-    public function actionGenerateItems($from, $to)
+    public function actionGenerateItems()
     {
         //item/generate-items
+
+        $from = Yii::$app->request->post('amount')['from'];
+        $to = Yii::$app->request->post('amount')['to'];
 
         $appleList = new AppleList(Yii::$app->user->identity);
         $appleList->clear();
@@ -19,7 +25,16 @@ class ItemController extends Controller
 
     public function actionHandleStateFunction()
     {
-        $this->goHome();
-        $stateId = \Yii::$app->request->post('state-id');
+        $appleId = Yii::$app->request->post('apple-id');
+        $functionName = Yii::$app->request->post('state-function');
+        $functionParam = false;
+        if ($functionName) {
+            $functionParam = Yii::$app->request->post('sfn-' . $functionName);
+        }
+
+        if ($appleObj = AppleFruit::instanceById($appleId, Yii::$app->user->identity->getId())) {
+            $appleObj->runFunction($functionName, $functionParam);
+        }
+
     }
 }

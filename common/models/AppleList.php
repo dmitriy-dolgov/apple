@@ -25,7 +25,7 @@ class AppleList
         $this->list = [];
     }
 
-    public function init($from = 1, $to = 50)
+    public function init($from = 1, $to = 10)
     {
         if (!$this->listUser->apples) {
             $this->randomInit($from, $to);
