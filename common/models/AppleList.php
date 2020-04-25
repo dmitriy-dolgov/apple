@@ -17,20 +17,29 @@ class AppleList
     public function __construct(User $user)
     {
         $this->listUser = $user;
+    }
 
-        if (!$user->apples) {
-            $this->randomInit();
+    public function clear()
+    {
+        Apple::deleteAll(['user_id' => $this->listUser->getId()]);
+        $this->list = [];
+    }
+
+    public function init($from = 1, $to = 50)
+    {
+        if (!$this->listUser->apples) {
+            $this->randomInit($from, $to);
             $this->saveToDb();
         } else {
             $this->loadFromDb();
         }
     }
 
-    protected function randomInit()
+    protected function randomInit($from, $to)
     {
         $this->list = [];
 
-        $amount = rand(1, 5);
+        $amount = rand($from, $to);
 
         for ($i = 0; $i < $amount; ++$i) {
             $apple = new AppleFruit();
@@ -41,18 +50,14 @@ class AppleList
 
     protected function saveToDb()
     {
-        $listUser = $this->listUser;
-        $list = $this->list;
-
-        Apple::getDb()->transaction(function($db) use ($list, $listUser) {
-            Apple::deleteAll(['user_id' => $listUser->getId()]);
-            foreach ($list as $apple) {
-                $appleSerialized = serialize($apple);
-                $newRecord = new Apple();
-                $newRecord->apple_data = $appleSerialized;
-                $listUser->link('apples', $newRecord);
+        foreach ($this->list as $id => $apple) {
+            $appleSerialized = serialize($apple);
+            if (!$dbApple = Apple::findOne($id)) {
+                $dbApple = new Apple();
             }
-        });
+            $dbApple->apple_data = $appleSerialized;
+            $this->listUser->link('apples', $dbApple);
+        }
     }
 
     protected function loadFromDb()
@@ -62,7 +67,7 @@ class AppleList
         foreach ($this->listUser->apples as $appleElement) {
             $appleObj = unserialize($appleElement->apple_data);
             if (is_object($appleObj)) {
-                $this->list[] = $appleObj;
+                $this->list[$appleElement->getPrimaryKey()] = $appleObj;
             } else {
                 \Yii::error('Не удалось unserialize даные яблока: ' . $appleElement->apple_data);
                 $appleElement->delete();
