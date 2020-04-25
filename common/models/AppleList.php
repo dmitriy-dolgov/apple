@@ -41,24 +41,31 @@ class AppleList
 
     protected function saveToDb()
     {
-        $listSerialized = serialize($this->list);
-        $newRecord = new Apple();
-        $newRecord->apple_data = $listSerialized;
-        $this->listUser->link('apples', $newRecord);
+        $listUser = $this->listUser;
+        $list = $this->list;
+
+        Apple::getDb()->transaction(function($db) use ($list, $listUser) {
+            Apple::deleteAll(['user_id' => $listUser->getId()]);
+            foreach ($list as $apple) {
+                $appleSerialized = serialize($apple);
+                $newRecord = new Apple();
+                $newRecord->apple_data = $appleSerialized;
+                $listUser->link('apples', $newRecord);
+            }
+        });
     }
 
     protected function loadFromDb()
     {
         $this->list = [];
 
-        $applesData = $this->listUser->apples[0];
-
-        if ($applesSerialized = $applesData->apple_data) {
-            if (is_array($appleList = unserialize($applesSerialized))) {
-                $this->list = $appleList;
+        foreach ($this->listUser->apples as $appleElement) {
+            $appleObj = unserialize($appleElement->apple_data);
+            if (is_object($appleObj)) {
+                $this->list[] = $appleObj;
             } else {
-                \Yii::error('Не удалось unserialize: ' . $applesSerialized);
-                $this->listUser->apples[0]->delete();
+                \Yii::error('Не удалось unserialize даные яблока: ' . $appleElement->apple_data);
+                $appleElement->delete();
             }
         }
     }
