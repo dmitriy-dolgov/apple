@@ -9,7 +9,7 @@ class OnGround extends \common\models\items\State
 {
     protected $size = 100;
 
-    /** @var integer когда упал */
+    /** @var integer когда упало */
     protected $fellTime;
 
     /** @var integer текущее время */
@@ -56,7 +56,7 @@ class OnGround extends \common\models\items\State
                     'description' => 'Сколько времени прошло в минутах',
                 ],
                 'func' => function ($time) {
-                    $this->currentTime += $time;
+                    $this->currentTime += $time * 60;
                     $rotAfter = $this->fellTime + self::ROT_TIMEOUT;
                     if ($this->currentTime >= $rotAfter) {
                         return new Rotten($this->fruit, $rotAfter);
@@ -78,7 +78,12 @@ class OnGround extends \common\models\items\State
                 'description' => 'Когда упало',
                 'value' => $this->fellTime,
                 'type' => 'timestamp',
-            ]
+            ],
+            [
+                'description' => 'Текущее время',
+                'value' => $this->currentTime,
+                'type' => 'timestamp',
+            ],
         ];
     }
 }
