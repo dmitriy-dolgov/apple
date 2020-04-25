@@ -14,11 +14,17 @@ abstract class Fruit
     /** @var common\models\items\State состояние фрукта */
     protected $currentState;
 
-    /** @var string */
+    /** @var string цвет в CSS стиле */
     public $color;
 
-    /** @var integer когда созрел (появился) */
+    /** @var integer unix timestamp когда созрел (появился) */
     public $ripen;
+
+    /** @var integer unix timestamp текущее время */
+    public $currentTime;
+
+    /** @var int сколько не съедено */
+    public $size = 100;
 
 
     abstract public static function getInstanceById($fruitId, $userId = false);
@@ -40,10 +46,15 @@ abstract class Fruit
 
         if ($fResult = $function['func']($params)) {
             if (is_a($fResult, '\common\models\items\State')) {
-                $this->stateList[] = $fResult;
-                $this->currentState = $fResult;
+                $this->setState($fResult);
             }
         }
+    }
+
+    protected function setState(\common\models\items\State $state)
+    {
+        $this->stateList[] = $state;
+        $this->currentState = $state;
     }
 
     public function randomInit()

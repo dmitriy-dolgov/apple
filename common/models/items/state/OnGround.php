@@ -7,13 +7,8 @@ use common\models\items\SignalRemove;
 
 class OnGround extends \common\models\items\State
 {
-    protected $size = 100;
-
     /** @var integer когда упало */
     protected $fellTime;
-
-    /** @var integer текущее время */
-    protected $currentTime;
 
     /** @var float|int как быстро сгниет */
     const ROT_TIMEOUT = 60 * 60 * 5;
@@ -24,7 +19,7 @@ class OnGround extends \common\models\items\State
         parent::__construct($fruit, $fellTime);
 
         $this->fellTime = $fellTime;
-        $this->currentTime = $this->fellTime;
+        $this->fruit->currentTime = $this->fellTime;
     }
 
     public function getName()
@@ -42,9 +37,9 @@ class OnGround extends \common\models\items\State
                     'description' => 'Сколько откусить в %',
                 ],
                 'func' => function ($eaten) {
-                    $newSize = $this->size - $eaten;
-                    $this->size = ($newSize < 0) ? 0 : $newSize;
-                    if ($this->size == 0) {
+                    $newSize = $this->fruit->size - $eaten;
+                    $this->fruit->size = ($newSize < 0) ? 0 : $newSize;
+                    if ($this->fruit->size == 0) {
                         throw new SignalRemove();
                     }
                 },
@@ -56,9 +51,9 @@ class OnGround extends \common\models\items\State
                     'description' => 'Сколько времени прошло в минутах',
                 ],
                 'func' => function ($time) {
-                    $this->currentTime += $time * 60;
+                    $this->fruit->currentTime += $time * 60;
                     $rotAfter = $this->fellTime + self::ROT_TIMEOUT;
-                    if ($this->currentTime >= $rotAfter) {
+                    if ($this->fruit->currentTime >= $rotAfter) {
                         return new Rotten($this->fruit, $rotAfter);
                     }
                 },
@@ -71,7 +66,7 @@ class OnGround extends \common\models\items\State
         return [
             [
                 'description' => 'Сколько процентов осталось',
-                'value' => $this->size,
+                'value' => $this->fruit->size,
                 'type' => 'percent',
             ],
             [
@@ -81,7 +76,7 @@ class OnGround extends \common\models\items\State
             ],
             [
                 'description' => 'Текущее время',
-                'value' => $this->currentTime,
+                'value' => $this->fruit->currentTime,
                 'type' => 'timestamp',
             ],
         ];

@@ -12,7 +12,7 @@ class AppleFruit extends Fruit
 
     public function __construct()
     {
-        $this->currentState = new OnTree($this);
+        $this->setState(new OnTree($this));
     }
 
     public static function getInstanceById($fruitId, $userId = false): ?AppleFruit
