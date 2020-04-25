@@ -3,6 +3,7 @@
 namespace common\models;
 
 use common\models\db\Apple;
+use common\models\items\state\OnTree;
 
 class AppleFruit extends Fruit
 {
