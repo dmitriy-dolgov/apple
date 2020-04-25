@@ -26,14 +26,15 @@ class AppleList
         $this->list = [];
     }
 
+    public function load()
+    {
+        $this->loadFromDb();
+    }
+
     public function init($from = 1, $to = 10)
     {
-        if (!$this->listUser->apples) {
-            $this->randomInit($from, $to);
-            $this->saveToDb();
-        } else {
-            $this->loadFromDb();
-        }
+        $this->randomInit($from, $to);
+        $this->saveToDb();
     }
 
     protected function randomInit($from, $to)

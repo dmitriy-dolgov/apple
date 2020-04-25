@@ -63,7 +63,7 @@ class SiteController extends Controller
     public function actionIndex()
     {
         $appleList = new AppleList(Yii::$app->user->identity);
-        $appleList->init(1, 7);
+        $appleList->load();
 
         return $this->render('index', [
             'appleList' => $appleList->getList(),
