@@ -19,7 +19,7 @@ abstract class State
 
     public function getData()
     {
-        return false;
+        return [];
     }
 
     public function getId()
