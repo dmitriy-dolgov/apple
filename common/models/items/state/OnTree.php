@@ -15,8 +15,9 @@ class OnTree extends \common\models\items\State
                     'type' => 'time',
                     'description' => 'Время падения с момента создания, мин.',
                 ],
-                'func' => function ($datetime) {
-                    return new OnGround($this->fruit, $datetime);
+                'func' => function ($time) {
+                    $timeSec = $time * 60;
+                    return new OnGround($this->fruit, $this->fruit->ripen + $timeSec);
                 },
             ],
         ];
