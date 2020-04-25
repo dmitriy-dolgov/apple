@@ -10,8 +10,6 @@ class ItemController extends Controller
 {
     public function actionGenerateItems()
     {
-        //item/generate-items
-
         $from = Yii::$app->request->post('amount')['from'];
         $to = Yii::$app->request->post('amount')['to'];
 
