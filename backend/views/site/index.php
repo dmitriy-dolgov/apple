@@ -91,6 +91,9 @@ CSS
                             <?php ActiveForm::begin(
                                 [
                                     'action' => '/apple/handle-state-function',
+                                    'options' => [
+                                        'style' => 'margin-bottom: 2em',
+                                    ],
                                 ]
                             ) ?>
 
@@ -104,10 +107,7 @@ CSS
                                     <input type="text" name="<?= Html::encode('sfn-' . $funcName) ?>">
                                 <?php endif; ?>
                             </div>
-                            <br>
-                            <div>
-                                <input type="submit" value="<?= Html::encode($func['name']) ?>">
-                            </div>
+                            <input style="margin-top: 7px" type="submit" value="<?= Html::encode($func['name']) ?>">
                             <?php ActiveForm::end() ?>
                         <?php endforeach; ?>
                     </td>
