@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\models\items\SignalFunction;
 use Yii;
 use common\models\db\Apple;
 use common\models\items\SignalRemove;
@@ -92,6 +93,8 @@ class AppleList
                 $appleObj->saveById($appleId, Yii::$app->user->identity);
             } catch (SignalRemove $sr) {
                 $appleObj::deleteById($appleId, $userId);
+            } catch (SignalFunction $sf) {
+                //TODO: обработать ошибку
             }
         }
     }

@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\models\items\SignalFunction;
 use common\models\items\State;
 
 abstract class Fruit
@@ -40,6 +41,12 @@ abstract class Fruit
 
     public function runFunction($functionName, $params = false)
     {
+        $functionList = $this->currentState->getFunctions();
+
+        if (!isset($functionList[$functionName])) {
+            throw new SignalFunction('Функция отсутствует', 1);
+        }
+
         $function = $this->currentState->getFunctions()[$functionName];
 
         assert(is_array($function));
