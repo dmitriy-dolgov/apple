@@ -32,9 +32,11 @@ class ItemController extends Controller
             $functionParam = Yii::$app->request->post('sfn-' . $functionName);
         }
 
-        if ($appleObj = AppleFruit::instanceById($appleId, Yii::$app->user->identity->getId())) {
+        if ($appleObj = AppleFruit::getInstanceById($appleId, Yii::$app->user->identity->getId())) {
             $appleObj->runFunction($functionName, $functionParam);
+            $appleObj->saveById($appleId, Yii::$app->user->identity);
         }
 
+        $this->goHome();
     }
 }
